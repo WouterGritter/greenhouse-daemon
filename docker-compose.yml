@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  greenhouse-daemon:
+    build: .
+    restart: unless-stopped
+    environment:
+      TEMP_SENSOR_URL: ${TEMP_SENSOR_URL}
+      TUYA_DEVICE_ID: ${TUYA_DEVICE_ID}
+      TUYA_LOCAL_KEY: ${TUYA_LOCAL_KEY}
+      TUYA_ADDRESS: ${TUYA_ADDRESS}
+      MIN_TEMPERATURE: ${MIN_TEMPERATURE}
+      MAX_TEMPERATURE: ${MAX_TEMPERATURE}
+      COLD_COLOR: ${COLD_COLOR}
+      MID_COLOR: ${MID_COLOR}
+      HOT_COLOR: ${HOT_COLOR}
+      UPDATE_INTERVAL: ${UPDATE_INTERVAL}
