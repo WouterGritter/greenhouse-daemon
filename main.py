@@ -64,8 +64,15 @@ def main():
     while True:
         try:
             temp = fetch_temperature()
-            r, g, b = generate_color(temp)
-            led_strip.set_colour(r, g, b)
+
+            status = led_strip.status()
+            current_mode = status['dps']['21']
+            if current_mode == 'colour':
+                print(f'Updating color. {temp=}')
+                r, g, b = generate_color(temp)
+                led_strip.set_colour(r, g, b)
+            else:
+                print(f'Mode isn\'t colour but {current_mode}, not updating color. {temp=}')
         except Exception as e:
             print(f'Error performing update! {e}')
 
