@@ -78,7 +78,7 @@ def main():
         try:
             status = led_strip.status()
             if status is None or status['dps'] is None or status['dps']['21'] is None:
-                print('Status is None! Rebuilding led strip.')
+                print(f'Status is invalid! Rebuilding led strip. {status=}')
                 led_strip.close()
                 led_strip = build_led_strip()
             else:
@@ -86,11 +86,11 @@ def main():
 
                 current_mode = status['dps']['21']
                 if current_mode == 'colour':
-                    print(f'Updating color. {temp=}')
+                    print(f'Updating color. {temp=}, {status=}')
                     r, g, b = generate_color(temp)
                     led_strip.set_colour(r, g, b)
                 else:
-                    print(f'Mode isn\'t colour but {current_mode}, not updating color. {temp=}')
+                    print(f'Mode isn\'t colour but {current_mode}, not updating color. {temp=}, {status=}')
         except Exception as e:
             print(f'Error performing update! {e}')
 
