@@ -30,6 +30,15 @@ print(f'{HOT_COLOR=}')
 print(f'{UPDATE_INTERVAL=}')
 
 
+def clamp(value, min_value, max_value):
+    if value < min_value:
+        return min_value
+    if value > max_value:
+        return max_value
+
+    return value
+
+
 def scale_color(value, low_color, high_color):
     return (value * (high_color[0] - low_color[0]) + low_color[0],
             value * (high_color[1] - low_color[1]) + low_color[1],
@@ -37,7 +46,7 @@ def scale_color(value, low_color, high_color):
 
 
 def generate_color(temp):
-    t_scaled = (temp - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE)
+    t_scaled = (clamp(temp, MIN_TEMPERATURE, MAX_TEMPERATURE) - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE)
     if t_scaled < 0.5:
         return scale_color(t_scaled * 2, COLD_COLOR, MID_COLOR)
     else:
