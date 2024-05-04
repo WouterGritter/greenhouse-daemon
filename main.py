@@ -49,13 +49,17 @@ def fetch_temperature():
     return data['temperature']
 
 
-def main():
-    led_strip = tinytuya.BulbDevice(
+def build_led_strip():
+    return tinytuya.BulbDevice(
         dev_id=TUYA_DEVICE_ID,
         address=TUYA_ADDRESS,
         local_key=TUYA_LOCAL_KEY,
         version=3.3
     )
+
+
+def main():
+    led_strip = build_led_strip()
 
     status = led_strip.status()
     print(f'Connected to led strip at {TUYA_ADDRESS}. Status: ${status}')
@@ -63,16 +67,21 @@ def main():
     print(f'Updating led strip color according to temperature every {UPDATE_INTERVAL} seconds.')
     while True:
         try:
-            temp = fetch_temperature()
-
             status = led_strip.status()
-            current_mode = status['dps']['21']
-            if current_mode == 'colour':
-                print(f'Updating color. {temp=}')
-                r, g, b = generate_color(temp)
-                led_strip.set_colour(r, g, b)
+            if status is None or status['dps'] is None or status['dps']['21'] is None:
+                print('Status is None! Rebuilding led strip.')
+                led_strip.close()
+                led_strip = build_led_strip()
             else:
-                print(f'Mode isn\'t colour but {current_mode}, not updating color. {temp=}')
+                temp = fetch_temperature()
+
+                current_mode = status['dps']['21']
+                if current_mode == 'colour':
+                    print(f'Updating color. {temp=}')
+                    r, g, b = generate_color(temp)
+                    led_strip.set_colour(r, g, b)
+                else:
+                    print(f'Mode isn\'t colour but {current_mode}, not updating color. {temp=}')
         except Exception as e:
             print(f'Error performing update! {e}')
 
