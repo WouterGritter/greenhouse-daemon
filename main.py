@@ -43,6 +43,8 @@ print(f'{UPDATE_INTERVAL=}')
 print(f'{OFF_TIME=}')
 print(f'{ON_TIME=}')
 
+print(f'The current datetime is {datetime.now()}')
+
 
 def clamp(value, min_value, max_value):
     if value < min_value:
