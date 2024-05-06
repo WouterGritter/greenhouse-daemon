@@ -15,3 +15,5 @@ services:
       MID_COLOR: ${MID_COLOR}
       HOT_COLOR: ${HOT_COLOR}
       UPDATE_INTERVAL: ${UPDATE_INTERVAL}
+      OFF_TIME: ${OFF_TIME}
+      ON_TIME: ${ON_TIME}
