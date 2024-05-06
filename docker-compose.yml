@@ -17,3 +17,4 @@ services:
       UPDATE_INTERVAL: ${UPDATE_INTERVAL}
       OFF_TIME: ${OFF_TIME}
       ON_TIME: ${ON_TIME}
+      TZ: ${TZ}
